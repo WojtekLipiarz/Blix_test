@@ -1,5 +1,11 @@
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 
+// ELEMENTS
+import { InputWrapper } from 'components/form/elements';
+
+// STYLES
+import { StyledFormContainer, SubmitButton } from 'components/form/Styles';
+
 interface FormValues {
 	accountType: string;
 	userName: string;
@@ -28,18 +34,17 @@ const Form = () => {
 	};
 
 	return (
-		<div>
-			<h2>Form</h2>
+		<StyledFormContainer>
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div>
-					<label htmlFor="accountType">Account Type:</label>
+				{/* accountType */}
+				<InputWrapper label="Account Type:" errorMessage={errors?.accountType?.message}>
 					<Controller
 						name="accountType"
 						control={control}
 						defaultValue=""
 						rules={{ required: 'Account Type is required' }}
 						render={({ field }) => (
-							<select {...field} id="accountType">
+							<select className="form-select" {...field} id="accountType">
 								<option value="" disabled hidden>
 									Select Account Type
 								</option>
@@ -48,10 +53,10 @@ const Form = () => {
 							</select>
 						)}
 					/>
-					{errors.accountType && <span>{errors.accountType.message}</span>}
-				</div>
-				<div>
-					<label htmlFor="userName">User Name (Email):</label>
+				</InputWrapper>
+
+				{/* userName */}
+				<InputWrapper label="User Name:" errorMessage={errors?.userName?.message}>
 					<Controller
 						name="userName"
 						control={control}
@@ -62,24 +67,28 @@ const Form = () => {
 								message: 'Invalid email address',
 							},
 						}}
-						render={({ field }) => <input {...field} type="email" id="userName" placeholder="name@example.com" />}
+						render={({ field }) => (
+							<input {...field} type="email" id="userName" placeholder="name@example.com" className="form-control" />
+						)}
 					/>
-					{errors.userName && <span>{errors.userName.message}</span>}
-				</div>
-				<div>
-					<label htmlFor="password">Password:</label>
+				</InputWrapper>
+
+				{/* password */}
+				<InputWrapper label="Password:" errorMessage={errors?.password?.message}>
 					<Controller
 						name="password"
 						control={control}
 						rules={{
 							required: 'Password is required',
 						}}
-						render={({ field }) => <input type="password" {...field} id="password" placeholder="Required" />}
+						render={({ field }) => (
+							<input type="password" {...field} id="password" placeholder="Required" className="form-control" />
+						)}
 					/>
-					{errors.password && <span>{errors.password.message}</span>}
-				</div>
-				<div>
-					<label htmlFor="serverAddress">Server Address:</label>
+				</InputWrapper>
+
+				{/* serverAddress */}
+				<InputWrapper label="Server Address:" errorMessage={errors?.serverAddress?.message}>
 					<Controller
 						name="serverAddress"
 						control={control}
@@ -89,51 +98,66 @@ const Form = () => {
 								message: 'Invalid URL format',
 							},
 						}}
-						render={({ field }) => <input {...field} id="serverAddress" placeholder="https://example.com" />}
+						render={({ field }) => (
+							<input {...field} id="serverAddress" placeholder="https://example.com" className="form-control" />
+						)}
 					/>
-					{errors.serverAddress && <span>{errors.serverAddress.message}</span>}
-				</div>
+				</InputWrapper>
 
 				{accountType === 'Advanced' && (
 					<>
-						<div>
-							<label htmlFor="serverPath">Server Path:</label>
+						{/* serverAddress */}
+						<InputWrapper label="Server Path:" errorMessage={errors?.serverPath?.message}>
 							<Controller
 								name="serverPath"
 								control={control}
-								render={({ field }) => <input {...field} id="serverPath" placeholder="/calendars/user/" />}
+								render={({ field }) => (
+									<input {...field} id="serverPath" placeholder="/calendars/user/" className="form-control" />
+								)}
 							/>
-							{errors.serverPath && <span>Invalid Server Path</span>}
-						</div>
-						<div>
-							<label htmlFor="port">Port (1-65535):</label>
+						</InputWrapper>
+
+						{/* port */}
+						<InputWrapper
+							label="Port (1-65535):"
+							errorMessage={errors?.serverPath?.message}
+							sidebarChildren={
+								// useSSL
+								<Controller
+									name="useSSL"
+									control={control}
+									render={({ field }) => (
+										<div className="form-check">
+											<input {...field} className="form-check-input" type="checkbox" value="" id="useSSL" />
+											<label className="form-check-label" htmlFor="useSSL">
+												Use SSL {errors?.useSSL && <span className="col-12 text-danger">{errors?.serverPath?.message}</span>}
+											</label>
+										</div>
+									)}
+								/>
+							}
+						>
 							<Controller
 								name="port"
 								control={control}
+								defaultValue={1}
 								rules={{
-									required: 'Port is required',
 									validate: (value: any) => {
 										const portNumber = parseInt(value, 10);
 										return (portNumber && portNumber >= 1 && portNumber <= 65535) || 'Invalid port number';
 									},
 								}}
-								render={({ field }) => <input {...field} type="number" id="port" />}
+								render={({ field }) => <input {...field} type="number" id="port" className="form-control" />}
 							/>
-							{errors.port && <span>{errors.port.message}</span>}
-						</div>
-						<div>
-							<label htmlFor="useSSL">Use SSL:</label>
-							<Controller
-								name="useSSL"
-								control={control}
-								render={({ field }) => <input {...field} type="checkbox" id="useSSL" value="on" />}
-							/>
-						</div>
+						</InputWrapper>
 					</>
 				)}
-				<button type="submit">Submit</button>
+
+				<SubmitButton type="submit" className="btn btn-primary">
+					Submit
+				</SubmitButton>
 			</form>
-		</div>
+		</StyledFormContainer>
 	);
 };
 

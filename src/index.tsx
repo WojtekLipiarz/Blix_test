@@ -17,6 +17,8 @@ import { setupInterceptorsTo } from 'config/axiosConfig';
 import App from 'App';
 import reportWebVitals from 'reportWebVitals';
 
+import 'bootstrap/dist/css/bootstrap.css';
+
 setupInterceptorsTo(axios);
 
 const container = document.getElementById('root');

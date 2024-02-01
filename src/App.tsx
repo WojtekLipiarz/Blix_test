@@ -1,8 +1,11 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import Form from 'components/form/Form';
 
 const App = () => (
 	<div>
-		<Form />
+		<ErrorBoundary FallbackComponent={() => null}>
+			<Form />
+		</ErrorBoundary>
 	</div>
 );
 
