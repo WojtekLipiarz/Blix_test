@@ -5,19 +5,20 @@
 		"jest": true,
 		"node": true,
 		"browser": true,
-		"es2021": true
+		"es2021": true,
 	},
 	"parserOptions": {
-		"project": "./tsconfig.json"
+		"project": "./tsconfig.json",
 	},
 	"globals": {
 		"document": true,
-		"window": true
+		"window": true,
 	},
 	"rules": {
 		// =========================
 		// --> turn the rule off <--
 		// =========================
+		"jsx-a11y/label-has-associated-control": 0,
 		"react/react-in-jsx-scope": 0, // React 17+ provide support for a new version of the JSX transform
 		"react/require-default-props": 0, // defaultProps => object default values
 		"import/prefer-default-export": 0,
@@ -30,8 +31,8 @@
 		"react/jsx-filename-extension": [
 			1,
 			{
-				"extensions": [".ts", ".tsx"]
-			}
+				"extensions": [".ts", ".tsx"],
+			},
 		],
 		// ====================================
 		// --> turn the rule on as an error <--
@@ -40,20 +41,20 @@
 		"react/function-component-definition": [
 			2,
 			{
-				"namedComponents": "arrow-function"
-			}
+				"namedComponents": "arrow-function",
+			},
 		], // This rule is aimed to enforce consistent function types for function components.
 		"prettier/prettier": [
 			2,
 			{
-				"endOfLine": "auto"
-			}
+				"endOfLine": "auto",
+			},
 		],
 		"react/no-unstable-nested-components": [
 			2,
 			{
-				"allowAsProps": true
-			}
+				"allowAsProps": true,
+			},
 		],
 		"react/jsx-props-no-spreading": [
 			2,
@@ -61,9 +62,9 @@
 				"html": "ignore",
 				"custom": "ignore",
 				"explicitSpread": "ignore",
-				"exceptions": [""]
-			}
-		]
+				"exceptions": [""],
+			},
+		],
 	},
 	// =====================================================
 	// Nadpisanie zasad dla konkretnych plików/grup plików
@@ -71,14 +72,14 @@
 	"overrides": [
 		{
 			"files": "", // [] - które definiujemy tutaj. Np. wszystkie pliki TS
-			"rules": {} // {} - same reguły nadpisujemy tutaj
+			"rules": {}, // {} - same reguły nadpisujemy tutaj
 		},
 		{
 			"files": ["**/*.stories.*"],
 			"rules": {
 				"import/no-anonymous-default-export": 0,
-				"react/jsx-props-no-spreading": 0
-			}
-		}
-	]
+				"react/jsx-props-no-spreading": 0,
+			},
+		},
+	],
 }
