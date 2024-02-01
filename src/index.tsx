@@ -1,16 +1,39 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { Suspense } from 'react';
+import { createRoot } from 'react-dom/client';
+import { ErrorBoundary } from 'react-error-boundary';
+import axios from 'axios';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+// ==============
+// --> STYLES <--
+// ==============
+import { ThemeProvider } from 'styled-components';
+import GlobalStyles from 'utils/theme/globalStyles';
+import theme from 'utils/theme/themeDefault';
+
+// CONFIG
+import { setupInterceptorsTo } from 'config/axiosConfig';
+
+// MAIN
+import App from 'App';
+import reportWebVitals from 'reportWebVitals';
+
+setupInterceptorsTo(axios);
+
+const container = document.getElementById('root');
+const root = createRoot(container!); // non-null (!) assertion
+
+const SuspensePending = () => <span>...pending</span>;
+
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+	<ErrorBoundary FallbackComponent={() => null}>
+		<ThemeProvider theme={theme}>
+			<GlobalStyles />
+
+			<Suspense fallback={<SuspensePending />}>
+				<App />
+			</Suspense>
+		</ThemeProvider>
+	</ErrorBoundary>,
 );
 
 // If you want to start measuring performance in your app, pass a function
